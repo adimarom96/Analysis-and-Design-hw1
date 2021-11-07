@@ -4,4 +4,8 @@ public class Customer {
     private String phone;
     private String email;
 
+    public boolean addUser(User user) {
+        //todo
+        return true;
+    }
 }
