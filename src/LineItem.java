@@ -1,4 +1,4 @@
-package PACKAGE_NAME;
-
 public class LineItem {
+    private int quantity;
+    private int price;
 }
