@@ -43,4 +43,20 @@ public class User {
         }// todo replace??
         return false;
     }
+
+    public String getLogin_id() {
+        return login_id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void remove_user(){
+        //todo: remove shopping cart and more
+    }
 }

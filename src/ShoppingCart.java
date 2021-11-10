@@ -28,7 +28,7 @@ public class ShoppingCart {
     }
 
     public boolean removeLineItem(LineItem lineItem) {
-        //todo
+        this.lineItems.remove(lineItem);
         return true;
     }
 

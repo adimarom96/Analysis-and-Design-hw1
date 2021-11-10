@@ -27,6 +27,10 @@ public class Customer {
         this.user = user;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
     public User getUser() {
         return user;
     }

@@ -83,4 +83,13 @@ public class Product {
     public boolean removeLineItem(LineItem lineItem) {
         return this.lineItems.remove(lineItem);
     }
+
+    public void remove() {
+        for (LineItem l:lineItems
+             ) {
+            l.delete_lineitem_from_order();
+            l.delete_shopcart_from_order();
+
+        }
+    }
 }

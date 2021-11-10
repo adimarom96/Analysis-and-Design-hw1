@@ -58,4 +58,12 @@ public class LineItem {
     public void setOrder(Order order) {
         this.order = order;
     }
+
+    public void delete_lineitem_from_order() {
+        this.order.removeLineItem(this);
+    }
+
+    public void delete_shopcart_from_order() {
+        this.shoppingCart.removeLineItem(this);
+    }
 }
