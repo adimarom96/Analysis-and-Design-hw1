@@ -10,6 +10,8 @@ public class User {
         this.password = password;
         this.state = state;
         this.customer = customer;
+        if (customer.getUser() == null)
+            customer.setUser(this);
     }
 
     public User(String login_id, String password, UserState state, Customer customer, ShoppingCart shoppingCart) {
@@ -18,6 +20,8 @@ public class User {
         this.state = state;
         this.customer = customer;
         this.shoppingCart = shoppingCart;
+        if (customer.getUser() == null)
+            customer.setUser(this);
     }
 
     public boolean addShoppingCart(ShoppingCart shopC) {
@@ -29,9 +33,10 @@ public class User {
         }
         return false;
     }
+
     public boolean addCustomer(Customer customer) {
-        if (this.shoppingCart == null) {
-            if (customer.addUser(this)) {
+        if (this.customer == null) {
+            if (customer.getUser() == null) { // when adding customer make sure that the customer dont alredy have user
                 this.customer = customer;
                 return true;
             }
