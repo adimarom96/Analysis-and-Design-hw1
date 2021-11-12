@@ -24,7 +24,6 @@ public class Order {
         this.lineItems = new LinkedList<LineItem>();
         this.payments = new LinkedList<Payment>();
         account.addOrder(this);
-
     }
 
     public Order(Date orderd, Address ship_to, OrderStatus status, LinkedList<LineItem> lineItems, Account account, LinkedList<Payment> payments) {
