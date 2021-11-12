@@ -10,29 +10,35 @@ public class Order {
     private LinkedList<LineItem> lineItems;
     private Account account;
     private LinkedList<Payment> payments;
+    static int orderid = 0;
 
-    public Order(String number, Date shipped, Date orderd, Address ship_to, float total, OrderStatus status, Account account) {
-        this.number = number;
-        this.shipped = shipped;
+    public Order(Date orderd, Address ship_to, OrderStatus status, Account account) {
+        orderid++;
+        this.number = String.valueOf(orderid);
+        this.shipped = null;
         this.orderd = orderd;
         this.ship_to = ship_to;
-        this.total = total;
+        this.total = 0;
         this.status = status;
         this.account = account;
         this.lineItems = new LinkedList<LineItem>();
         this.payments = new LinkedList<Payment>();
+        account.addOrder(this);
+
     }
 
-    public Order(String number, Date shipped, Date orderd, Address ship_to, float total, OrderStatus status, LinkedList<LineItem> lineItems, Account account, LinkedList<Payment> payments) {
-        this.number = number;
-        this.shipped = shipped;
+    public Order(Date orderd, Address ship_to, OrderStatus status, LinkedList<LineItem> lineItems, Account account, LinkedList<Payment> payments) {
+        orderid++;
+        this.number = String.valueOf(orderid);
+        this.shipped = null;
         this.orderd = orderd;
         this.ship_to = ship_to;
-        this.total = total;
+        this.total = 0;
         this.status = status;
         this.lineItems = lineItems;
         this.account = account;
         this.payments = payments;
+        account.addOrder(this);
     }
 
     public boolean addLineItem(LineItem lineItem) {
@@ -67,8 +73,44 @@ public class Order {
         return true;
 
     }
-    public boolean removePayment(Payment payment)
-    {
+
+    public boolean removePayment(Payment payment) {
         return this.payments.remove(payment);
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getOrderId() {
+        return this.number;
+    }
+
+   /* public void display() {
+        System.out.println("order number: "+ this.number + "\n");
+        System.out.println("order date: "+ this.orderd + "\n");
+        System.out.println("shipping date: "+ this.shipped + "\n");
+        System.out.println("ship to : "+ this.ship_to + "\n");
+        System.out.println("status : "+ this.status + "\n");
+        System.out.println("total : "+ this.total + "\n");
+    }*/
+
+    public void toPrint() {
+        // todo - add to print the id system
+        System.out.println("Order{" +
+                "number='" + number + '\'' +
+                ", shipped=" + shipped +
+                ", orderd=" + orderd +
+                ", ship_to=" + ship_to +
+                ", total=" + total +
+                ", status=" + status +
+                '}');
+
+        for (LineItem lineItem : lineItems) {
+            lineItem.toPrint();
+        }
+        for (Payment payment : payments) {
+            payment.toPrint();
+        }
     }
 }

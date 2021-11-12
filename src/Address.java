@@ -5,7 +5,12 @@ public class Address {
         this.address = address;
     }
 
-    public String getAddress() {
+    @Override
+    public String toString() {
+        return address;
+    }
+
+    public String getAddressString() {
         return address;
     }
 

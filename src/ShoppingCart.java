@@ -1,11 +1,34 @@
+import java.util.LinkedList;
+
 public class ShoppingCart {
-    public boolean addLineItem(LineItem lineItem) {
-        //todo
-        return true;
+    private Date created;
+    private User user;
+    private LinkedList<LineItem> lineItems;
+    private Account account;
+
+    public ShoppingCart(Date date, User user, Account account) {
+        this.created = date;
+        this.user = user;
+        this.account = account;
+    }
+
+    public ShoppingCart(Date date, User user, LinkedList<LineItem> lineItems, Account account) {
+        this.created = date;
+        this.user = user;
+        this.lineItems = lineItems;
+        this.account = account;
+    }
+
+    public boolean addLineItem(LineItem lineItem) { //maybe should get alinked list of line items
+        if (lineItem != null) {
+            this.lineItems.add(lineItem);
+            return true;
+        }
+        return false;
     }
 
     public boolean removeLineItem(LineItem lineItem) {
-        //todo
+        this.lineItems.remove(lineItem);
         return true;
     }
 
@@ -14,4 +37,11 @@ public class ShoppingCart {
         //todo!
     }
     //todo: created type date
+
+
+    public void toPrint() {
+        System.out.println("ShoppingCart{" +
+                "created=" + created +
+                '}'+'\n');
+    }
 }

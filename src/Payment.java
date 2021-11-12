@@ -1,38 +1,21 @@
+import javax.swing.*;
+
 public class Payment {
     private String id;
-    //todo: add paid type Date
+    private Date paid;
     private float total;
     private String details;
     private Account account;
     private Order order;
 
-    public Payment(String id, float total, String details, Account account, Order order) {
+    public Payment(String id, Date paid, float total, String details, Account account, Order order) {
         this.id = id;
-        //todo: date!
+        this.paid = paid;
         this.total = total;
         this.details = details;
         this.account = account;
         this.order = order;
-    }
-
-    public boolean addAcount(Account a){
-        if(this.account!=null)
-        {
-            this.account = a;
-            this.account.addPayment(this);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean addOrder(Order o){
-        if(this.order!=null)
-        {
-            this.order = o;
-            this.order.addPayment(this);
-            return true;
-        }
-        return false;
+        account.addPayment(this);
     }
 
     public String getId() {
@@ -67,4 +50,17 @@ public class Payment {
         this.details = details;
     }
     // todo: set or replace of the order, account.
+
+    public void toPrint() {
+        // todo - add to print the id system
+        System.out.println("Payment{" +
+                "id='" + id + '\'' +
+                ", paid=" + paid +
+                ", total=" + total +
+                ", details='" + details);
+        if (this instanceof ImmediatePayment)
+            System.out.println(", PhoneConfirmation=" + ((ImmediatePayment) this).isPhoneConfirmation() + "}");
+        if (this instanceof DelayPayment)
+            System.out.println(", PaymentDate=" + ((DelayPayment) this).getPaymentDate() + "}");
+    }
 }
