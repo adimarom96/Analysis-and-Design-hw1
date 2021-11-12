@@ -52,4 +52,11 @@ public class Supplier {
     public void removeProduct(Product product){
         this.products.remove(product);
     }
+
+    public void toPrint() {
+        System.out.println( "Supplier{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}');
+    }
 }

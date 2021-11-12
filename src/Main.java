@@ -92,7 +92,7 @@ public class Main {
         LocalDate localDate = LocalDate.now();
         Order order = new Order(new Date(localDate.toString()), new Address(address), OrderStatus.New, account);
         orders.add(order);
-        System.out.println(order.getNumber()); //todo: order printing
+        System.out.println("Order number: "+order.getNumber()); //todo: order printing
         return true;
     }
 
@@ -149,9 +149,27 @@ public class Main {
         return true;
     }
 
-    public static void Show_all_object(LinkedList<User> users) {
-        for (User u:users
-             ) {
+    public static void Show_all_object(LinkedList<User> users, LinkedList<Order> orders, LinkedList<Product> products, LinkedList<Supplier> suppliers) {
+        for (User u : users
+        ) {
+            u.toPrint();
+        }
+        System.out.println();
+
+        for (Order u : orders
+        ) {
+            u.toPrint();
+        }
+        System.out.println();
+
+        for (Product u : products
+        ) {
+            u.toPrint();
+        }
+        System.out.println();
+
+        for (Supplier u : suppliers
+        ) {
             u.toPrint();
         }
     }
@@ -164,8 +182,8 @@ public class Main {
 
         LinkedList<User> users = new LinkedList<User>();
         LinkedList<Order> orders = new LinkedList<Order>();
-        LinkedList<Product> products= new LinkedList<Product>();
-        LinkedList<Supplier> suppliers= new LinkedList<Supplier>();
+        LinkedList<Product> products = new LinkedList<Product>();
+        LinkedList<Supplier> suppliers = new LinkedList<Supplier>();
         User logged_user = null;
 
         String login_id, password, address, phone, email, billing_address;
@@ -185,19 +203,19 @@ public class Main {
 
         LocalDate local = LocalDate.now();
         String currentD = local.toString();
-        User dani = new User("Dani","Dani123",UserState.Active,null);
-        Customer cDani = new Customer("Dani","0541234567","D@walla.com",new Address("Rager"),null,dani);
-        Account accDani = new Account("Dani","Rager", false,new Date(currentD),new Date("none"),0,cDani,null);
-        ShoppingCart SCDani = new ShoppingCart(new Date(currentD),dani,accDani);
+        User dani = new User("Dani", "Dani123", UserState.Active, null);
+        Customer cDani = new Customer("Dani", "0541234567", "D@walla.com", new Address("Rager"), null, dani);
+        Account accDani = new Account("Dani", "Rager", false, new Date(currentD), new Date("none"), 0, cDani, null);
+        ShoppingCart SCDani = new ShoppingCart(new Date(currentD), dani, accDani);
         dani.addCustomer(cDani);
         cDani.setAccount(accDani);
         accDani.setShoppingCart(SCDani);
         users.add(dani);
 
-        User dana = new User("Dana","Dana123",UserState.Active,null);
-        Customer cDana = new Customer("Dana","0541234567","Da@walla.com",new Address("Rager1"),null,dana);
-        PremiumAccount accDana = new PremiumAccount("Dana","Rager1", false,new Date(currentD),new Date("none"),0,cDana,null);
-        ShoppingCart SCDana = new ShoppingCart(new Date(currentD),dana,accDana);
+        User dana = new User("Dana", "Dana123", UserState.Active, null);
+        Customer cDana = new Customer("Dana", "0541234567", "Da@walla.com", new Address("Rager1"), null, dana);
+        PremiumAccount accDana = new PremiumAccount("Dana", "Rager1", false, new Date(currentD), new Date("none"), 0, cDana, null);
+        ShoppingCart SCDana = new ShoppingCart(new Date(currentD), dana, accDana);
         dana.addCustomer(cDana);
         cDana.setAccount(accDana);
         accDana.setShoppingCart(SCDana);
@@ -215,7 +233,7 @@ public class Main {
             Scanner scan = new Scanner(System.in);
             int number = scan.nextInt();
             switch (number) {
-                case 1:
+                case 1://add user
                     System.out.println("enter login id");
                     scan = new Scanner(System.in);
                     login_id = scan.next();
@@ -240,13 +258,13 @@ public class Main {
                     scan = new Scanner(System.in);
                     billing_address = scan.next();
 
-                    System.out.println("do you want to be preimum account? (y/n)");
+                    System.out.println("do you want to be premium account? (y/n)");
                     scan = new Scanner(System.in);
                     String ans = scan.next();
                     LocalDate localDate = LocalDate.now();
                     String current_date = localDate.toString();
 
-                    if (ans == "y") {
+                    if (ans.equals("y")) {
                         //account = new PremiumAccount();
                     } else {
                         account = new Account(login_id, billing_address, false, new Date(current_date), new Date("none"), 0, null, null);
@@ -263,21 +281,27 @@ public class Main {
 
                     users.add(user);
                     System.out.println(login_id + " your user been created!");
-                    //add user
+
                     break;  //optional
-                case 2:
+                case 2://remove user
+                    if (logged_user == null) {
+                        System.out.println("you must logged in first");
+                        break;
+                    }
+                    // todo: can remove others?
                     System.out.println("enter login id");
                     scan = new Scanner(System.in);
                     login_id = scan.next();
-                    if(Remove_user(login_id,users))
+                    if (Remove_user(login_id, users)) {
                         System.out.println(login_id + " been removed");
-                    else
+                        if (logged_user.getLogin_id().equals(login_id))
+                            logged_user = null;
+                    } else
                         System.out.println("no delete");
 
-                    //remove user
                     break;
                 case 3:
-                    if(logged_user != null) {
+                    if (logged_user != null) {
                         System.out.println("there is alredy logged in user, try again later.");
                         break;
                     }
@@ -285,39 +309,37 @@ public class Main {
                     System.out.println("enter your login id:");
                     scan = new Scanner(System.in);
                     login_id = scan.next();
-                    User want_login =find_user(login_id,users);
-                    if(want_login!=null)
-                    {
-                    System.out.println("enter your password:");
-                    scan = new Scanner(System.in);
-                    password = scan.next();
-                    if(Login_user(login_id,password,users,logged_user)) {
-                        System.out.println("you are now logged in!");
-                        logged_user = want_login;
-                        break;
-                    }
-                    else
-                        System.out.println("worng password");
+                    User want_login = find_user(login_id, users);
+                    if (want_login != null) {
+                        System.out.println("enter your password:");
+                        scan = new Scanner(System.in);
+                        password = scan.next();
+                        if (Login_user(login_id, password, users, logged_user)) {
+                            System.out.println("you are now logged in!");
+                            logged_user = want_login;
+                            break;
+                        } else
+                            System.out.println("worng password");
                         break;
                     }
                     System.out.println("worng login id");
                     //login user
                     break;
                 case 4:
-                    if(logged_user==null){
+                    if (logged_user == null) {
                         System.out.println("your are not logged in!");
                         break;
                     }
                     System.out.println("enter your login id:");
                     scan = new Scanner(System.in);
                     login_id = scan.next();
-                    User want_logout =find_user(login_id,users);
-                    Logout_user(login_id,users,logged_user);
-                    System.out.println("you are now loggedout!");
+                    User want_logout = find_user(login_id, users);
+                    Logout_user(login_id, users, logged_user);
+                    System.out.println("you are now logged out!");
                     //Logout user
                     break;
-                case 5:
-                    if(logged_user==null){
+                case 5://Create new order
+                    if (logged_user == null) {
                         System.out.println("you must logged in first");
                         break;
                     }
@@ -326,11 +348,11 @@ public class Main {
                     scan = new Scanner(System.in);
                     address = scan.next();
 
-                    Create_new_order(address,to_order,orders);
+                    Create_new_order(address, to_order, orders);
                     //Create new order
                     break;
                 case 6:
-                    if(logged_user==null){
+                    if (logged_user == null) {
                         System.out.println("your are not logged in!");
                         break;
                     }
@@ -338,7 +360,7 @@ public class Main {
                     System.out.println("enter your login id:");
                     scan = new Scanner(System.in);
                     login_id = scan.next();
-                    if(!logged_user.getLogin_id().equals(login_id)){
+                    if (!logged_user.getLogin_id().equals(login_id)) {
                         System.out.println("worng login id");
                         break;
                     }
@@ -346,9 +368,9 @@ public class Main {
                     System.out.println("enter the Order id ");
                     scan = new Scanner(System.in);
                     String order_id = scan.next();
-                    Order order_to_addproduct = find_order(order_id,orders);
+                    Order order_to_addproduct = find_order(order_id, orders);
 
-                    if(order_to_addproduct==null){
+                    if (order_to_addproduct == null) {
                         System.out.println("could not found " + order_id);
                         break;
                     }
@@ -356,13 +378,13 @@ public class Main {
                     scan = new Scanner(System.in);
                     String product_name = scan.next();
 
-                    Product product_to_order = find_Product(product_name,products);
-                    if(product_to_order==null){
+                    Product product_to_order = find_Product(product_name, products);
+                    if (product_to_order == null) {
                         System.out.println("could not found " + product_name);
                         break;
                     } //todo: maybe need to conect payment to the new order
 
-                    if(Create_new_order(logged_user.getCustomer().getAddress().getAddressString(),logged_user.getCustomer().getAccount(),orders)){
+                    if (Create_new_order(logged_user.getCustomer().getAddress().getAddressString(), logged_user.getCustomer().getAccount(), orders)) {
                         System.out.println("product added to order!");
                     }
                     //Add product to order
@@ -380,7 +402,7 @@ public class Main {
                     //Delete product
                     break;
                 case 11:
-                    Show_all_object(users);//todo: need to send all the rest of the obejcts
+                    Show_all_object(users, orders, products, suppliers);//todo: need to send all the rest of the obejcts
                     //Show all objects
                     break;
                 case 12:
@@ -395,7 +417,5 @@ public class Main {
 
 
     }
-
-
 
 }

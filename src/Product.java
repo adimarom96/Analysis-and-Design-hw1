@@ -92,4 +92,11 @@ public class Product {
 
         }
     }
+
+    public void toPrint() {
+        System.out.println( "Product{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}');
+    }
 }
