@@ -12,19 +12,19 @@ public class Main {
         return null;
     }
 
-    public Order find_order(String order_id, LinkedList<Order> orders) {
+    public static Order find_order(String order_id, LinkedList<Order> orders) {
         for (Order o : orders
         ) {
-            if (o.getOrderId() == order_id)
+            if (o.getOrderId().equals(order_id))
                 return o;
         }
         return null;
     }
 
-    public Product find_Product(String product_name, LinkedList<Product> products) {
+    public static Product find_Product(String product_name, LinkedList<Product> products) {
         for (Product p : products
         ) {
-            if (p.getName() == product_name)
+            if (p.getName().equals(product_name))
                 return p;
         }
         return null;
@@ -183,6 +183,10 @@ public class Main {
         Supplier eastwest = new Supplier("EastWest", "EastWest");
         Product bamba = new Product("Bamaba", "Bamba", osem);
         Product ramen = new Product("Ramen", "Ramen", eastwest);
+        products.add(bamba);
+        products.add(ramen);
+        suppliers.add(osem);
+        suppliers.add(eastwest);
 
         LocalDate local = LocalDate.now();
         String currentD = local.toString();
@@ -203,12 +207,11 @@ public class Main {
         cDana.setAccount(accDana);
         accDana.setShoppingCart(SCDana);
         users.add(dana);
-
         accDana.addProcudt(bamba);
 
         //dana.toString();
         //dani.toString();
-
+        logged_user = dani;
         System.out.println("Welcome");
         boolean flag = true;
         while (flag) {
@@ -337,7 +340,36 @@ public class Main {
                         break;
                     }
 
-                    
+                    System.out.println("enter your login id:");
+                    scan = new Scanner(System.in);
+                    login_id = scan.next();
+                    if(!logged_user.getLogin_id().equals(login_id)){
+                        System.out.println("worng login id");
+                        break;
+                    }
+
+                    System.out.println("enter the Order id ");
+                    scan = new Scanner(System.in);
+                    String order_id = scan.next();
+                    Order order_to_addproduct = find_order(order_id,orders);
+
+                    if(order_to_addproduct==null){
+                        System.out.println("could not found " + order_id);
+                        break;
+                    }
+                    System.out.println("enter the proudct name ");
+                    scan = new Scanner(System.in);
+                    String product_name = scan.next();
+
+                    Product product_to_order = find_Product(product_name,products);
+                    if(product_to_order==null){
+                        System.out.println("could not found " + product_name);
+                        break;
+                    } //todo: maybe need to conect payment to the new order
+
+                    if(Create_new_order(logged_user.getCustomer().getAddress().getAddressString(),logged_user.getCustomer().getAccount(),orders)){
+                        System.out.println("product added to order!");
+                    }
                     //Add product to order
                     break;
                 case 7:

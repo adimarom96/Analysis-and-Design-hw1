@@ -50,6 +50,10 @@ public class Customer {
         this.account.toPrint();
     }
 
+    public Address getAddress() {
+        return this.address;
+    }
+
     /*public boolean addUser(User user) {
         if (this.user != null)
             return false;

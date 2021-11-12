@@ -10,7 +10,7 @@ public class Address {
         return address;
     }
 
-    public String getAddress() {
+    public String getAddressString() {
         return address;
     }
 
