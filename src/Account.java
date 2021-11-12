@@ -50,4 +50,24 @@ public class Account {
     public LinkedList<Order> getOrders() {
         return orders;
     }
+
+    public void setCustomer(Customer customer) {
+        this.customer=customer;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart=shoppingCart;
+    }
+
+    public void toPrint() {
+        System.out.println( "Account{" +
+                "id='" + id + '\'' +
+                ", billing_address='" + billing_address + '\'' +
+                ", is_closed=" + is_closed +
+                ", open=" + open +
+                ", closed=" + closed +
+                ", balance=" + balance +
+                '}');
+        this.shoppingCart.toPrint();
+    }
 }

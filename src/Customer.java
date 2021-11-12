@@ -35,6 +35,21 @@ public class Customer {
         return user;
     }
 
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+
+    public void toPrint() {
+        System.out.println( "Customer{" +
+                "id='" + id + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", address=" + address +
+                '}');
+        this.account.toPrint();
+    }
+
     /*public boolean addUser(User user) {
         if (this.user != null)
             return false;

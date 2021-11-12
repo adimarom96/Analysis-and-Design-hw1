@@ -10,8 +10,8 @@ public class User {
         this.password = password;
         this.state = state;
         this.customer = customer;
-        if (customer.getUser() == null)
-            customer.setUser(this);
+        //if (customer.getUser() == null)
+        //    customer.setUser(this);
     }
 
     public User(String login_id, String password, UserState state, Customer customer, ShoppingCart shoppingCart) {
@@ -36,10 +36,10 @@ public class User {
 
     public boolean addCustomer(Customer customer) {
         if (this.customer == null) {
-            if (customer.getUser() == null) { // when adding customer make sure that the customer dont alredy have user
-                this.customer = customer;
-                return true;
-            }
+            //if (customer.getUser() == null) { // when adding customer make sure that the customer dont alredy have user
+            this.customer = customer;
+            return true;
+
         }// todo replace??
         return false;
     }
@@ -56,7 +56,26 @@ public class User {
         return customer;
     }
 
-    public void remove_user(){
+    public void remove_user() {
         //todo: remove shopping cart and more
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    public void print() {
+        // print User , Customer , Account, ShopCart
+        System.out.println(this);
+
+    }
+
+    public void toPrint() {
+        System.out.println("User{" +
+                "login_id='" + login_id + '\'' +
+                ", password='" + password + '\'' +
+                ", state=" + state +
+                '}');
+        this.customer.toPrint();
     }
 }

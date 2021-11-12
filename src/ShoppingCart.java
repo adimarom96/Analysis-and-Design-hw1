@@ -1,19 +1,19 @@
 import java.util.LinkedList;
 
 public class ShoppingCart {
-    private Date date;
+    private Date created;
     private User user;
     private LinkedList<LineItem> lineItems;
     private Account account;
 
     public ShoppingCart(Date date, User user, Account account) {
-        this.date = date;
+        this.created = date;
         this.user = user;
         this.account = account;
     }
 
     public ShoppingCart(Date date, User user, LinkedList<LineItem> lineItems, Account account) {
-        this.date = date;
+        this.created = date;
         this.user = user;
         this.lineItems = lineItems;
         this.account = account;
@@ -37,4 +37,11 @@ public class ShoppingCart {
         //todo!
     }
     //todo: created type date
+
+
+    public void toPrint() {
+        System.out.println("ShoppingCart{" +
+                "created=" + created +
+                '}'+'\n');
+    }
 }
