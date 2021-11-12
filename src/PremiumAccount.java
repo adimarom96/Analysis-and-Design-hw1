@@ -13,7 +13,6 @@ public class PremiumAccount extends Account {
         this.products = new LinkedList<Product>();
     }
 
-
     public PremiumAccount(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance, Customer customer, ShoppingCart shoppingCart, LinkedList<Product> products) {
         super(id, billing_address, is_closed, open, closed, balance, customer, shoppingCart);
         this.products = products;
@@ -30,5 +29,16 @@ public class PremiumAccount extends Account {
 
     public void addProcudt(Product p) {
         this.products.add(p);
+        p.setPremium(this);
+    }
+
+    public void removeProduct(Product p){
+        if(p!=null)
+            this.products.remove(p);
+    }
+
+    @Override
+    public boolean isPremium() {
+        return true;
     }
 }

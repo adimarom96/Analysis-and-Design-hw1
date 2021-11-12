@@ -63,7 +63,7 @@ public class LineItem {
         this.order.removeLineItem(this);
     }
 
-    public void delete_shopcart_from_order() {
+    public void delete_lineitem_from_shopcart() {
         this.shoppingCart.removeLineItem(this);
     }
 

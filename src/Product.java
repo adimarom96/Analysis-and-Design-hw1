@@ -88,7 +88,7 @@ public class Product {
         for (LineItem l:lineItems
              ) {
             l.delete_lineitem_from_order();
-            l.delete_shopcart_from_order();
+            l.delete_lineitem_from_shopcart();
 
         }
     }
@@ -98,5 +98,17 @@ public class Product {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}');
+    }
+
+    public void setPremium(PremiumAccount premiumAccount) {
+        this.premiumAccount = premiumAccount;
+    }
+
+    public LinkedList<LineItem> getLineItems() {
+        return lineItems;
+    }
+
+    public PremiumAccount getPremiumAccount() {
+        return premiumAccount;
     }
 }

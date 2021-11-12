@@ -79,4 +79,8 @@ public class Account {
                 '}');
         this.shoppingCart.toPrint();
     }
+    public boolean isPremium()
+    {
+        return false;
+    }
 }
