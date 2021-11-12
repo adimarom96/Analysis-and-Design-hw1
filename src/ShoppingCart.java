@@ -10,6 +10,7 @@ public class ShoppingCart {
         this.created = date;
         this.user = user;
         this.account = account;
+        this.lineItems = new LinkedList<LineItem>();
     }
 
     public ShoppingCart(Date date, User user, LinkedList<LineItem> lineItems, Account account) {

@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.LinkedList;
 
 public class Order {
@@ -51,10 +52,12 @@ public class Order {
             }
         }
         this.lineItems.add(lineItem);
+        this.total += lineItem.getPrice();
         return true;
     }
 
     public boolean removeLineItem(LineItem lineItem) {
+        this.total -= lineItem.getPrice();
         return this.lineItems.remove(lineItem);
     }
 
@@ -85,14 +88,15 @@ public class Order {
         return this.number;
     }
 
-   /* public void display() {
-        System.out.println("order number: "+ this.number + "\n");
-        System.out.println("order date: "+ this.orderd + "\n");
-        System.out.println("shipping date: "+ this.shipped + "\n");
-        System.out.println("ship to : "+ this.ship_to + "\n");
-        System.out.println("status : "+ this.status + "\n");
-        System.out.println("total : "+ this.total + "\n");
-    }*/
+   public void display() {
+        System.out.println("order number: "+ this.number);
+        System.out.println("order date: "+ this.orderd);
+        System.out.println("shipping date: "+ this.shipped);
+        System.out.println("ship to : "+ this.ship_to);
+        System.out.println("status : "+ this.status);
+        System.out.println("total : "+ this.total);
+        System.out.println();
+    }
 
     public void toPrint() {
         // todo - add to print the id system

@@ -61,6 +61,13 @@ public class Account {
         this.shoppingCart = shoppingCart;
     }
 
+    public Order getLastOrder(){
+        if (this.getOrders().size() > 0) {
+            return this.getOrders().getLast();
+        }
+        return null;
+    }
+
     public void toPrint() {
         System.out.println("Account{" +
                 "id='" + id + '\'' +

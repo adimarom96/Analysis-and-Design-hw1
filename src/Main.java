@@ -191,6 +191,7 @@ public class Main {
         Customer customer = null;
         ShoppingCart shoppingCart = null;
         User user = null;
+        Order last_order = null;
 
         Supplier osem = new Supplier("Osem", "Osem");
         Supplier eastwest = new Supplier("EastWest", "EastWest");
@@ -209,6 +210,7 @@ public class Main {
         ShoppingCart SCDani = new ShoppingCart(new Date(currentD), dani, accDani);
         dani.addCustomer(cDani);
         cDani.setAccount(accDani);
+        dani.setShoppingCart(SCDani);
         accDani.setShoppingCart(SCDani);
         users.add(dani);
 
@@ -218,6 +220,7 @@ public class Main {
         ShoppingCart SCDana = new ShoppingCart(new Date(currentD), dana, accDana);
         dana.addCustomer(cDana);
         cDana.setAccount(accDana);
+        dana.setShoppingCart(SCDana);
         accDana.setShoppingCart(SCDana);
         users.add(dana);
         accDana.addProcudt(bamba);
@@ -384,12 +387,26 @@ public class Main {
                         break;
                     } //todo: maybe need to conect payment to the new order
 
-                    if (Create_new_order(logged_user.getCustomer().getAddress().getAddressString(), logged_user.getCustomer().getAccount(), orders)) {
+                    order_to_addproduct.addLineItem(new LineItem(1, 1, product_to_order, logged_user.getShoppingCart() , order_to_addproduct));
+                    System.out.println("product added to order!");
+
+                    /*if (Create_new_order(logged_user.getCustomer().getAddress().getAddressString(), logged_user.getCustomer().getAccount(), orders)) {
                         System.out.println("product added to order!");
-                    }
+                    }*/
                     //Add product to order
                     break;
                 case 7:
+                    if (logged_user == null) {
+                        System.out.println("your are not logged in!");
+                        break;
+                    }
+                    last_order = logged_user.getCustomer().getAccount().getLastOrder();
+                    if(last_order != null) {
+                        last_order.display();
+                    }
+                    else{
+                        System.out.println("no orders yet!");
+                    }
                     //Display order
                     break;
                 case 8:

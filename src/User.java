@@ -56,6 +56,10 @@ public class User {
         return customer;
     }
 
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
     public void remove_user() {
         //todo: remove shopping cart and more
     }
