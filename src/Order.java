@@ -10,9 +10,9 @@ public class Order {
     private LinkedList<LineItem> lineItems;
     private Account account;
     private LinkedList<Payment> payments;
-    static int orderid=0;
+    static int orderid = 0;
 
-    public Order( Date orderd, Address ship_to, OrderStatus status, Account account) {
+    public Order(Date orderd, Address ship_to, OrderStatus status, Account account) {
         orderid++;
         this.number = String.valueOf(orderid);
         this.shipped = null;
@@ -73,8 +73,8 @@ public class Order {
         return true;
 
     }
-    public boolean removePayment(Payment payment)
-    {
+
+    public boolean removePayment(Payment payment) {
         return this.payments.remove(payment);
     }
 
@@ -86,12 +86,31 @@ public class Order {
         return this.number;
     }
 
-    public void display() {
+   /* public void display() {
         System.out.println("order number: "+ this.number + "\n");
         System.out.println("order date: "+ this.orderd + "\n");
         System.out.println("shipping date: "+ this.shipped + "\n");
         System.out.println("ship to : "+ this.ship_to + "\n");
         System.out.println("status : "+ this.status + "\n");
         System.out.println("total : "+ this.total + "\n");
+    }*/
+
+    public void toPrint() {
+        // todo - add to print the id system
+        System.out.println("Order{" +
+                "number='" + number + '\'' +
+                ", shipped=" + shipped +
+                ", orderd=" + orderd +
+                ", ship_to=" + ship_to +
+                ", total=" + total +
+                ", status=" + status +
+                '}');
+
+        for (LineItem lineItem : lineItems) {
+            lineItem.toPrint();
+        }
+        for (Payment payment : payments) {
+            payment.toPrint();
+        }
     }
 }

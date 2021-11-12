@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class Payment {
     private String id;
     private Date paid;
@@ -15,7 +17,6 @@ public class Payment {
         this.order = order;
         account.addPayment(this);
     }
-
 
     public String getId() {
         return id;
@@ -49,4 +50,17 @@ public class Payment {
         this.details = details;
     }
     // todo: set or replace of the order, account.
+
+    public void toPrint() {
+        // todo - add to print the id system
+        System.out.println("Payment{" +
+                "id='" + id + '\'' +
+                ", paid=" + paid +
+                ", total=" + total +
+                ", details='" + details);
+        if (this instanceof ImmediatePayment)
+            System.out.println(", PhoneConfirmation=" + ((ImmediatePayment) this).isPhoneConfirmation() + "}");
+        if (this instanceof DelayPayment)
+            System.out.println(", PaymentDate=" + ((DelayPayment) this).getPaymentDate() + "}");
+    }
 }

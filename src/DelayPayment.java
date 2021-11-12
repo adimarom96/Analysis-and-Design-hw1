@@ -7,4 +7,7 @@ public class DelayPayment extends Payment {
     }
     //todo : add date
 
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
 }

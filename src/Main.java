@@ -79,7 +79,7 @@ public class Main {
     }
 
     public static boolean Logout_user(String login_id, LinkedList<User> users, User logged_user) {
-        if (logged_user.getLogin_id() == login_id) {
+        if (logged_user.getLogin_id().equals(login_id)) {
             logged_user = null;
             return true;
         }
@@ -112,8 +112,7 @@ public class Main {
     public void Display_order(User logged_user) {
         LinkedList<Order> user_orders = logged_user.getCustomer().getAccount().getOrders();
         Order order = user_orders.getLast();
-        order.display();
-
+        order.toPrint();
     }
 
     public boolean Link_product(String product_name, double price, int quantity, User logged_user, LinkedList<Product> all_products) {
@@ -154,9 +153,7 @@ public class Main {
         for (User u:users
              ) {
             u.toPrint();
-
         }
-
     }
 
     public void Show_object_id(String id) {
@@ -164,8 +161,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
-
 
         LinkedList<User> users = new LinkedList<User>();
         LinkedList<Order> orders = new LinkedList<Order>();

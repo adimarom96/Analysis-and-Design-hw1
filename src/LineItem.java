@@ -66,4 +66,12 @@ public class LineItem {
     public void delete_shopcart_from_order() {
         this.shoppingCart.removeLineItem(this);
     }
+
+    public void toPrint() {
+        // todo - add to print the id system
+        System.out.println("LineItem{" +
+                "quantity=" + quantity +
+                ", price=" + price +
+                '}');
+    }
 }

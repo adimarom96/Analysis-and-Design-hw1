@@ -5,4 +5,8 @@ public class ImmediatePayment extends Payment{
         super(id, paid, total, details, account, order);
         this.phoneConfirmation = phoneConfirmation;
     }
+
+    public boolean isPhoneConfirmation() {
+        return phoneConfirmation;
+    }
 }
