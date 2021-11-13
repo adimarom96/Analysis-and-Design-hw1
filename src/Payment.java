@@ -45,19 +45,22 @@ public class Payment {
     public void setTotal(float total) {
         this.total = total;
     }
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
     public void setDetails(String details) {
         this.details = details;
     }
-    // todo: set or replace of the order, account.
 
     public void toPrint() {
-        // todo - add to print the id system
         System.out.println("Payment{" +
                 "id='" + id + '\'' +
                 ", paid=" + paid +
                 ", total=" + total +
-                ", details='" + details);
+                ", details='" + details+
+                ", system id=" + hashCode());
         if (this instanceof ImmediatePayment)
             System.out.println(", PhoneConfirmation=" + ((ImmediatePayment) this).isPhoneConfirmation() + "}");
         if (this instanceof DelayPayment)

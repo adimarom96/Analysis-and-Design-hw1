@@ -52,11 +52,30 @@ public class Supplier {
     public void removeProduct(Product product){
         this.products.remove(product);
     }
-
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
     public void toPrint() {
         System.out.println( "Supplier{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", system id=" + hashCode() +
+
                 '}');
+    }
+
+    @Override
+    public String toString() {
+        String productlist="";
+        for (Product p:products
+             ) {
+            productlist += p.getName() + " ";
+
+        }
+        return "Supplier{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}'+" Products: " +productlist;
     }
 }

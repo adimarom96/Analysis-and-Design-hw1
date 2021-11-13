@@ -9,7 +9,10 @@ public class Address {
     public String toString() {
         return address;
     }
-
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
     public String getAddressString() {
         return address;
     }

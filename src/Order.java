@@ -100,9 +100,35 @@ public class Order {
         System.out.println("Total: " + this.total);
         System.out.println();
     }
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        String paymnetlist="";
+        for (Payment pay:payments
+        ) {
+            paymnetlist += pay.getId() + " ";
+        }
+        String all="";
+        for (LineItem l :lineItems
+        ) {
+            all += ", lineitem: " + l.getProduct().getName() + " - Price: " + l.getPrice()+ " Quantity: " + l.getQuantity();
+
+        }
+        return "Order{" +
+                "number='" + number + '\'' +
+                ", shipped=" + shipped +
+                ", ordered=" + ordered +
+                ", ship_to=" + ship_to +
+                ", total=" + total +
+                ", status=" + status +
+                '}' + ", Account: " + this.account.getID() + ", Payments: " + paymnetlist + ", LineItems: " + all ;
+    }
 
     public void toPrint() {
-        // todo - add to print the id system
         System.out.println("Order{" +
                 "number='" + number + '\'' +
                 ", shipped=" + shipped +
@@ -110,6 +136,7 @@ public class Order {
                 ", ship_to=" + ship_to +
                 ", total=" + total +
                 ", status=" + status +
+                ", system id=" + hashCode() +
                 '}');
 
         for (LineItem lineItem : lineItems) {

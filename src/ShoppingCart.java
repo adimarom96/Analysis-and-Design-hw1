@@ -6,6 +6,15 @@ public class ShoppingCart {
     private LinkedList<LineItem> lineItems;
     private Account account;
 
+    public void removelines(){
+        for (LineItem l:lineItems
+             ) {
+            l.delete_lineitem_from_order();
+            l.delete_lineitem_from_shopcart();
+            l.delete_lineitem_from_product();
+
+        }
+    }
     public ShoppingCart(Date date, User user, Account account) {
         this.created = date;
         this.user = user;
@@ -36,8 +45,34 @@ public class ShoppingCart {
     /*public boolean addUser(User user) {
         return true;
     }*/
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
     public void toPrint() {
-        System.out.println("ShoppingCart{" + "created=" + created + '}');
+        System.out.println("ShoppingCart{" + "created=" + created + ", system id=" + hashCode() + '}' + ", Owner: " + this.user.getLogin_id());
+    }
+
+    public String getDate() {
+        return created.toString();
+    }
+
+    @Override
+    public String toString() {
+        String all ="";
+        all += ", User: " + user.getLogin_id() + ", Account: " + account.getID();
+        for (LineItem l :lineItems
+             ) {
+            all += " lineitem: " + l.getProduct().getName() + "-  Price: " + l.getPrice()+ " Quantity: " + l.getQuantity();
+
+        }
+        return "ShoppingCart{" +
+                "created=" + created +
+                '}' + ", "+ all;
+    }
+
+    public LinkedList<LineItem> getLines() {
+        return  this.lineItems;
     }
 }

@@ -40,7 +40,7 @@ public class User {
             this.customer = customer;
             return true;
 
-        }// todo replace??
+        }
         return false;
     }
 
@@ -60,13 +60,13 @@ public class User {
         return shoppingCart;
     }
 
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
     public void remove_user() {
         // todo: remove shopping cart and more
         // todo: important!
-    }
-
-    public void setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
     }
 
     public void print() {
@@ -75,12 +75,29 @@ public class User {
 
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     public void toPrint() {
         System.out.println("User{" +
                 "login_id='" + login_id + '\'' +
                 ", password='" + password + '\'' +
                 ", state=" + state +
+                ", system id=" + hashCode() +
+
                 '}');
         this.customer.toPrint();
+    }
+
+    @Override
+    public String toString() {
+
+        return "User{" +
+                "login_id='" + login_id + '\'' +
+                ", password='" + password + '\'' +
+                ", state=" + state +
+                '}'+ " Customer: " + this.getCustomer().getId() + ", Shopping cart: " + shoppingCart.getDate();
     }
 }

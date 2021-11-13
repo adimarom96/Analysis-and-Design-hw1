@@ -66,15 +66,15 @@ public class Product {
             return true;
         }
         return false;
-    }// todo: consider new func if want to replace the Premium account;
+    }
 
     public boolean addSupplier(Supplier supplier) {
         if (this.supplier == null) {
             if (supplier.addProduct(this)) {
-                this.supplier=supplier;
+                this.supplier = supplier;
                 return true;
             }
-        }// todo replace??
+        }
         return false;
     }
 
@@ -83,11 +83,10 @@ public class Product {
     }
 
     public void remove() {
-        for (LineItem l:lineItems
-             ) {
+        for (LineItem l : lineItems
+        ) {
             l.delete_lineitem_from_order();
             l.delete_lineitem_from_shopcart();
-
         }
     }
 
@@ -103,10 +102,33 @@ public class Product {
         return premiumAccount;
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     public void toPrint() {
-        System.out.println( "Product{" +
+        System.out.println("Product{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", system id=" + hashCode() +
+
                 '}');
+    }
+
+    @Override
+    public String toString() {
+        String all = "";
+        if (this.getPremiumAccount() != null)
+            all += " Owner: " + this.getPremiumAccount().getID();
+        for (LineItem l : lineItems
+        ) {
+            all += ", lineitem: " + l.getProduct().getName() + " - Price: " + l.getPrice() + " Quantity: " + l.getQuantity();
+
+        }
+        return "Product{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}' + ", Supplier: " + this.getSupplier().getName() + ", " + all;
     }
 }

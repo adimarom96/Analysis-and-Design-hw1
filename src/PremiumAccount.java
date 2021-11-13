@@ -38,7 +38,24 @@ public class PremiumAccount extends Account {
     }
 
     @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+    @Override
     public boolean isPremium() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        String productlist="";
+        for (Product p:products
+        ) {
+            productlist += p.getName() + " ";
+
+        }
+        return  "PremiumAccount{" +
+                "products=" + productlist +
+                '}' + " "+ super.toString();
     }
 }

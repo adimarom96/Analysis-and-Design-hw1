@@ -21,6 +21,7 @@ public class Customer {
         this.email = email;
         this.address = address;
         this.account = account;
+        this.user = null;
     }
 
     public void setUser(User user) {
@@ -46,15 +47,37 @@ public class Customer {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", address=" + address +
+                ", system id=" + hashCode() +
                 '}');
         this.account.toPrint();
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     public Address getAddress() {
         return this.address;
     }
 
-    /*public boolean addUser(User user) {
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public String toString() {
+        String us="";
+        if(user!=null)
+            us = " User: " + this.getUser().getLogin_id();
+        return "Customer{" +
+                "id='" + id + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", address=" + address +
+                '}' + ", Account: " + this.getAccount().getID() + us;
+    }
+/*public boolean addUser(User user) {
         if (this.user != null)
             return false;
         if (user != null) {

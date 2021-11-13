@@ -5,7 +5,10 @@ public class ImmediatePayment extends Payment{
         super(id, paid, total, details, account, order);
         this.phoneConfirmation = phoneConfirmation;
     }
-
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
     public boolean isPhoneConfirmation() {
         return phoneConfirmation;
     }

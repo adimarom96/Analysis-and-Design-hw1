@@ -13,7 +13,6 @@ public class Account {
     private LinkedList<Order> orders;
     private LinkedList<Payment> payments;
 
-    //todo: קשר אחד לאחד עם קסטומר ועם עגלת קניות
     public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance, Customer customer, ShoppingCart shoppingCart, LinkedList<Order> orders, LinkedList<Payment> payments) {
         this.id = id;
         this.billing_address = billing_address;
@@ -75,12 +74,45 @@ public class Account {
                 ", open=" + open +
                 ", closed=" + closed +
                 ", balance=" + balance +
+                ", system id=" + hashCode() +
                 '}');
         this.shoppingCart.toPrint();
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     public boolean isPremium()
     {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        String orderlist="";
+        String paymnetlist="";
+        for (Order p:orders
+        ) {
+            orderlist += p.getNumber() + " ";
+        }
+        for (Payment pay:payments
+        ) {
+            paymnetlist += pay.getId() + " ";
+        }
+        return "Account{" +
+                "id='" + id + '\'' +
+                ", billing_address='" + billing_address + '\'' +
+                ", is_closed=" + is_closed +
+                ", open=" + open +
+                ", closed=" + closed +
+                ", balance=" + balance +
+                '}' + " Customer: " + this.customer.getId() + ", ShoppingCart:" + shoppingCart.getDate()  +
+                ", Orders: " + orderlist +", Payments: " + paymnetlist;
+    }
+
+    public String getID() {
+        return id;
     }
 }
