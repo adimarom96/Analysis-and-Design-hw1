@@ -29,6 +29,7 @@ public class Main {
         }
         return null;
     }
+
     public static Supplier find_Supplier(String supplier_name, LinkedList<Supplier> sups) {
         for (Supplier p : sups
         ) {
@@ -45,21 +46,6 @@ public class Main {
                 return s;
         }
         return null;
-    }
-
-    public boolean Add_user(String login_id, LinkedList<User> users) {
-
-        User u = find_user(login_id, users);
-        if (u != null)
-            return false;
-
-        users.add(u);
-        return true;
-
-        //TODO: ADD USER, GET DATA FROM USER
-            /*User new_u = new User()
-            users.add(new User())*/
-
     }
 
     static boolean Remove_user(String login_id, LinkedList<User> users) {
@@ -100,6 +86,43 @@ public class Main {
         orders.add(order);
         System.out.println("Order number: " + order.getNumber()); //todo: order printing
         return true;
+    }
+
+    public static void Show_all_object(LinkedList<User> users, LinkedList<Order> orders, LinkedList<Product> products, LinkedList<Supplier> suppliers) {
+        for (User u : users
+        ) {
+            u.toPrint();
+        }
+
+        for (Order u : orders
+        ) {
+            u.toPrint();
+        }
+
+        for (Product u : products
+        ) {
+            u.toPrint();
+        }
+
+        for (Supplier u : suppliers
+        ) {
+            u.toPrint();
+        }
+    }
+
+    public boolean Add_user(String login_id, LinkedList<User> users) {
+
+        User u = find_user(login_id, users);
+        if (u != null)
+            return false;
+
+        users.add(u);
+        return true;
+
+        //TODO: ADD USER, GET DATA FROM USER
+            /*User new_u = new User()
+            users.add(new User())*/
+
     }
 
     public boolean Add_product_to_order(String order_id, String login_id, String product_name, LinkedList<Order> orders, LinkedList<Product> products) {
@@ -155,31 +178,6 @@ public class Main {
         return true;
     }
 
-    public static void Show_all_object(LinkedList<User> users, LinkedList<Order> orders, LinkedList<Product> products, LinkedList<Supplier> suppliers) {
-        for (User u : users
-        ) {
-            u.toPrint();
-        }
-        System.out.println();
-
-        for (Order u : orders
-        ) {
-            u.toPrint();
-        }
-        System.out.println();
-
-        for (Product u : products
-        ) {
-            u.toPrint();
-        }
-        System.out.println();
-
-        for (Supplier u : suppliers
-        ) {
-            u.toPrint();
-        }
-    }
-
     public void Show_object_id(String id) {
 
     }
@@ -192,7 +190,7 @@ public class Main {
         LinkedList<Supplier> suppliers = new LinkedList<Supplier>();
         User logged_user = null;
 
-        String login_id, password, address, phone, email, billing_address, product_name,supplier_name;
+        String login_id, password, address, phone, email, billing_address, product_name, supplier_name;
         Account account = null;
         Customer customer = null;
         ShoppingCart shoppingCart = null;
@@ -200,6 +198,7 @@ public class Main {
         Order last_order = null;
         Supplier supplier = null;
         Product product_to_order = null;
+        Product productLink = null;
 
         Supplier osem = new Supplier("Osem", "Osem");
         Supplier eastwest = new Supplier("EastWest", "EastWest");
@@ -241,7 +240,7 @@ public class Main {
         System.out.println("Welcome");
         boolean flag = true;
         while (flag) {
-            String menu = "Choose your next action:\n1.Add user\n2.Remove user\n3.login user\n4.Logout user\n5.Create new order\n6.Add product to order\n7.Display order\n8.Link product\n9.Add product\n10.Delete product\n11.Show all objects\n12.Show object Id\n13.Exit!";
+            String menu = "\nChoose your next action:\n1.Add user\n2.Remove user\n3.login user\n4.Logout user\n5.Create new order\n6.Add product to order\n7.Display order\n8.Link product\n9.Add product\n10.Delete product\n11.Show all objects\n12.Show object Id\n13.Exit!";
             System.out.println(menu);
             Scanner scan = new Scanner(System.in);
             String number = scan.next();
@@ -278,12 +277,11 @@ public class Main {
                     String current_date = localDate.toString();
 
                     if (ans.equals("y")) {
-                        //account = new PremiumAccount();
-                    } else {
+                        account = new PremiumAccount(login_id, billing_address, false, new Date(current_date), new Date("none"), 0, null, null);
+                    } else if (ans.equals("n")) {
                         account = new Account(login_id, billing_address, false, new Date(current_date), new Date("none"), 0, null, null);
-                    }
-                    //todo: take care of preimum accuont
-
+                    } else
+                        break;// todo: what if !=y/n ???
                     customer = new Customer(login_id, phone, email, new Address(address), account, null);
                     user = new User(login_id, password, UserState.New, customer);
                     shoppingCart = new ShoppingCart(new Date(current_date), user, account);
@@ -294,8 +292,8 @@ public class Main {
 
                     users.add(user);
                     System.out.println(login_id + " your user been created!");
-
                     break;  //optional
+
                 case "2"://remove user
                     if (logged_user == null) {
                         System.out.println("you must logged in first");
@@ -311,11 +309,11 @@ public class Main {
                             logged_user = null;
                     } else
                         System.out.println("no delete");
-
                     break;
+
                 case "3":
                     if (logged_user != null) {
-                        System.out.println("there is alredy logged in user, try again later.");
+                        System.out.println("there is already logged in user, try again later.");
                         break;
                     }
 
@@ -332,12 +330,13 @@ public class Main {
                             logged_user = want_login;
                             break;
                         } else
-                            System.out.println("worng password");
+                            System.out.println("wrong password");
                         break;
                     }
-                    System.out.println("worng login id");
+                    System.out.println("wrong login id");
                     //login user
                     break;
+
                 case "4":
                     if (logged_user == null) {
                         System.out.println("your are not logged in!");
@@ -348,17 +347,17 @@ public class Main {
                     login_id = scan.next();
                     User want_logout = find_user(login_id, users);
                     logged_user = Logout_user(login_id, users, logged_user);
-                    if(logged_user == null) {
+                    if (logged_user == null) {
                         System.out.println("you are now logged out!");
                         break;
-                    }
-                    else
+                    } else
                         System.out.println("you can't log out!");
                     //Logout user
                     break;
+
                 case "5"://Create new order
                     if (logged_user == null) {
-                        System.out.println("you must logged in first");
+                        System.out.println("you are not logged in!");
                         break;
                     }
                     Account to_order = logged_user.getCustomer().getAccount();
@@ -366,21 +365,21 @@ public class Main {
                     scan = new Scanner(System.in);
                     address = scan.next();
 
-                    Create_new_order(address, to_order, orders);
                     //Create new order
+                    Create_new_order(address, to_order, orders);
                     break;
-                case "6":
+
+                case "6": //Add product to order
                     if (logged_user == null) {
-                        System.out.println("your are not logged in!");
+                        System.out.println("you are not logged in!");
                         break;
                     }
-
                     System.out.println("enter your login id:");
                     //todo - the id is the id of the user the product belongs to !
                     scan = new Scanner(System.in);
                     login_id = scan.next();
                     if (!logged_user.getLogin_id().equals(login_id)) {
-                        System.out.println("worng login id");
+                        System.out.println("wrong login id");
                         break;
                     }
 
@@ -393,7 +392,7 @@ public class Main {
                         System.out.println("could not found " + order_id);
                         break;
                     }
-                    System.out.println("enter the proudct name ");
+                    System.out.println("enter the product name ");
                     scan = new Scanner(System.in);
                     product_name = scan.next();
 
@@ -409,8 +408,8 @@ public class Main {
                     /*if (Create_new_order(logged_user.getCustomer().getAddress().getAddressString(), logged_user.getCustomer().getAccount(), orders)) {
                         System.out.println("product added to order!");
                     }*/
-                    //Add product to order
                     break;
+
                 case "7"://Display order
                     if (logged_user == null) {
                         System.out.println("your are not logged in!");
@@ -423,6 +422,7 @@ public class Main {
                         System.out.println("no orders yet!");
                     }
                     break;
+
                 case "8": //Link Product *Product_Name* *Price* *Quantity*
                     //Link product
                     if (logged_user == null) {
@@ -436,13 +436,19 @@ public class Main {
                     System.out.println("enter the product name ");
                     scan = new Scanner(System.in);
                     product_name = scan.next();
-                    product_to_order = find_Product(product_name, products);
-                    if (product_to_order == null) {
+                    productLink = find_Product(product_name, products);
+                    if (productLink == null) {
                         System.out.println("could not found " + product_name);
                         break;
                     }
-                    ((PremiumAccount)logged_user.getCustomer().getAccount()).addProcudt(product_to_order);
+                    if (productLink.getPremiumAccount() == null) {
+                        ((PremiumAccount) logged_user.getCustomer().getAccount()).addProcudt(productLink);
+                        System.out.println("Successfully link the product!");
+                    }
+                    else
+                        System.out.println("This product already belong to another premium account");
                     break;
+
                 case "9": //Add Product *Product_Name* *Supplier_Name*
                     System.out.println("enter the product name ");
                     scan = new Scanner(System.in);
@@ -455,16 +461,16 @@ public class Main {
                     System.out.println("enter the supplier name ");
                     scan = new Scanner(System.in);
                     supplier_name = scan.next();
-                    supplier = find_Supplier(supplier_name,suppliers);
-                    if(supplier == null)
-                    {
+                    supplier = find_Supplier(supplier_name, suppliers);
+                    if (supplier == null) {
                         System.out.println("No supplier exists");
                         break;
                     }
-                    product_to_order = new Product(product_name,product_name,supplier);
+                    product_to_order = new Product(product_name, product_name, supplier);
                     supplier.addProduct(product_to_order);
                     products.add(product_to_order);
                     break;
+
                 case "10":
                     //Delete product
                     System.out.println("enter the product name");
@@ -476,36 +482,37 @@ public class Main {
                         break;
                     }
 
-                    if(product_to_order.getPremiumAccount()!=null)
+                    if (product_to_order.getPremiumAccount() != null)
                         product_to_order.getPremiumAccount().removeProduct(product_to_order);
                     product_to_order.getSupplier().removeProduct(product_to_order);
                     LinkedList<LineItem> lineItems = product_to_order.getLineItems();
-                    for (LineItem LI:lineItems
-                         ) {
+                    for (LineItem LI : lineItems
+                    ) {
                         LI.delete_lineitem_from_order();
                         LI.delete_lineitem_from_shopcart();
                     }
                     products.remove(product_to_order);
-
                     break;
+
                 case "11":
                     Show_all_object(users, orders, products, suppliers);//todo: need to send all the rest of the obejcts
                     //Show all objects
                     break;
+
                 case "12"://ShowObjectId *id*
                     //Show object
                     break;
+
                 case "13":
                     //Exit!
                     flag = false;
                     break;
+
                 default:
+                    System.out.println("Please try again");
                     //System.out.println("???????????????");
-                   //break;
+                    //break;
             }
         }
-
-
     }
-
 }

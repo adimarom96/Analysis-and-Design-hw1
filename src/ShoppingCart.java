@@ -39,10 +39,9 @@ public class ShoppingCart {
     }
     //todo: created type date
 
-
     public void toPrint() {
         System.out.println("ShoppingCart{" +
                 "created=" + created +
-                '}'+'\n');
+                '}');
     }
 }
