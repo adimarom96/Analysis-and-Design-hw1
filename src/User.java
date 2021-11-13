@@ -24,7 +24,7 @@ public class User {
             customer.setUser(this);
     }
 
-    public boolean addShoppingCart(ShoppingCart shopC) {
+    /*public boolean addShoppingCart(ShoppingCart shopC) {
         if (this.shoppingCart == null) {
             if (shopC.addUser(this)) {
                 this.shoppingCart = shopC;
@@ -32,7 +32,7 @@ public class User {
             }
         }
         return false;
-    }
+    }*/
 
     public boolean addCustomer(Customer customer) {
         if (this.customer == null) {
@@ -61,7 +61,8 @@ public class User {
     }
 
     public void remove_user() {
-        //todo: remove shopping cart and more
+        // todo: remove shopping cart and more
+        // todo: important!
     }
 
     public void setShoppingCart(ShoppingCart shoppingCart) {

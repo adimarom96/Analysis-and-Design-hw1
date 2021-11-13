@@ -33,15 +33,11 @@ public class ShoppingCart {
         return true;
     }
 
-    public boolean addUser(User user) {
+    /*public boolean addUser(User user) {
         return true;
-        //todo!
-    }
-    //todo: created type date
+    }*/
 
     public void toPrint() {
-        System.out.println("ShoppingCart{" +
-                "created=" + created +
-                '}');
+        System.out.println("ShoppingCart{" + "created=" + created + '}');
     }
 }

@@ -49,7 +49,6 @@ public class Main {
     }
 
     static boolean Remove_user(String login_id, LinkedList<User> users) {
-
         User u = find_user(login_id, users);
         if (u != null) {
             users.remove(u);
@@ -79,13 +78,13 @@ public class Main {
         return logged_user;
     }
 
-    public static boolean Create_new_order(String address, Account account, LinkedList<Order> orders) {
+    public static void Create_new_order(String address, Account account, LinkedList<Order> orders) {
         //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
         LocalDate localDate = LocalDate.now();
         Order order = new Order(new Date(localDate.toString()), new Address(address), OrderStatus.New, account);
         orders.add(order);
-        System.out.println("Order number: " + order.getNumber()); //todo: order printing
-        return true;
+        //System.out.println("Order number: " + order.getNumber());
+        order.display();
     }
 
     public static void Show_all_object(LinkedList<User> users, LinkedList<Order> orders, LinkedList<Product> products, LinkedList<Supplier> suppliers) {
@@ -500,7 +499,9 @@ public class Main {
                     break;
 
                 case "12"://ShowObjectId *id*
-                    //Show object
+                    /* Show object details AND all the NAMES of his connections ! */
+
+
                     break;
 
                 case "13":

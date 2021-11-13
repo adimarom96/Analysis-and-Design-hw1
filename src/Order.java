@@ -4,7 +4,7 @@ import java.util.LinkedList;
 public class Order {
     private String number;
     private Date shipped;
-    private Date orderd;
+    private Date ordered;
     private Address ship_to;
     private float total;
     private OrderStatus status;
@@ -17,7 +17,7 @@ public class Order {
         orderid++;
         this.number = String.valueOf(orderid);
         this.shipped = null;
-        this.orderd = orderd;
+        this.ordered = orderd;
         this.ship_to = ship_to;
         this.total = 0;
         this.status = status;
@@ -31,7 +31,7 @@ public class Order {
         orderid++;
         this.number = String.valueOf(orderid);
         this.shipped = null;
-        this.orderd = orderd;
+        this.ordered = orderd;
         this.ship_to = ship_to;
         this.total = 0;
         this.status = status;
@@ -88,13 +88,16 @@ public class Order {
         return this.number;
     }
 
-   public void display() {
-        System.out.println("order number: "+ this.number);
-        System.out.println("order date: "+ this.orderd);
-        System.out.println("shipping date: "+ this.shipped);
-        System.out.println("ship to : "+ this.ship_to);
-        System.out.println("status : "+ this.status);
-        System.out.println("total : "+ this.total);
+    public void display()  {
+        System.out.println("Order number: " + this.number);
+        System.out.println("Order date: " + this.ordered);
+        if(this.shipped!=null)
+            System.out.println("Shipping date: " + this.shipped);
+        else
+            System.out.println("Not shipped yet");
+        System.out.println("Ship to: " + this.ship_to);
+        System.out.println("Status: " + this.status);
+        System.out.println("Total: " + this.total);
         System.out.println();
     }
 
@@ -103,7 +106,7 @@ public class Order {
         System.out.println("Order{" +
                 "number='" + number + '\'' +
                 ", shipped=" + shipped +
-                ", orderd=" + orderd +
+                ", ordered=" + ordered +
                 ", ship_to=" + ship_to +
                 ", total=" + total +
                 ", status=" + status +

@@ -40,7 +40,6 @@ public class Account {
         this.payments = new LinkedList<Payment>();
     }
 
-
     public void addPayment(Payment payment) {
         payments.add(payment);
     }
@@ -79,6 +78,7 @@ public class Account {
                 '}');
         this.shoppingCart.toPrint();
     }
+
     public boolean isPremium()
     {
         return false;

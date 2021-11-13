@@ -69,7 +69,6 @@ public class Product {
     }// todo: consider new func if want to replace the Premium account;
 
     public boolean addSupplier(Supplier supplier) {
-
         if (this.supplier == null) {
             if (supplier.addProduct(this)) {
                 this.supplier=supplier;
@@ -77,7 +76,6 @@ public class Product {
             }
         }// todo replace??
         return false;
-
     }
 
     public boolean removeLineItem(LineItem lineItem) {
@@ -93,13 +91,6 @@ public class Product {
         }
     }
 
-    public void toPrint() {
-        System.out.println( "Product{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}');
-    }
-
     public void setPremium(PremiumAccount premiumAccount) {
         this.premiumAccount = premiumAccount;
     }
@@ -110,5 +101,12 @@ public class Product {
 
     public PremiumAccount getPremiumAccount() {
         return premiumAccount;
+    }
+
+    public void toPrint() {
+        System.out.println( "Product{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}');
     }
 }

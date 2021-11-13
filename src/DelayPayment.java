@@ -5,7 +5,6 @@ public class DelayPayment extends Payment {
         super(id, paid, total, details, account, order);
         this.paymentDate = paymentDate;
     }
-    //todo : add date
 
     public Date getPaymentDate() {
         return paymentDate;
