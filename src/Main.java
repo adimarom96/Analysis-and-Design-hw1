@@ -340,14 +340,8 @@ public class Main {
                     }
 
                     System.out.println("enter login id to buy from");
-                    //todo - the id is the id of the user the product belongs to !
                     scan = new Scanner(System.in);
                     login_id = scan.next();
-//                    if (!logged_user.getLogin_id().equals(login_id)) {
-//                        System.out.println("wrong login id");
-//                        break;
-//                    }
-                    //todo: new ohad..
                     String idToBuyFrom = "";
                     boolean f1 = false;
                     User u = find_user(login_id, users);
@@ -374,18 +368,14 @@ public class Main {
                             System.out.println("wrong id");
                             break;
                         }
-
-
                         System.out.println("enter the Order id");
                         scan = new Scanner(System.in);
                         String order_id = scan.next();
                         Order order_to_addproduct = find_order(order_id, orders);
-
                         if (order_to_addproduct == null) {
                             System.out.println("could not found " + order_id);
                             break;
                         }
-
                         LineItem line_to_add = new LineItem(1, 1, product_to_order, logged_user.getShoppingCart(), order_to_addproduct);
                         order_to_addproduct.addLineItem(line_to_add);
                         System.out.println("product added to order!");
@@ -393,12 +383,8 @@ public class Main {
                         localDate = LocalDate.now();
                         current_date = localDate.toString();
                         Date d = new Date(current_date);
-                        DelayPayment pay = new DelayPayment(logged_user.getLogin_id(),d,order_to_addproduct.getTotal(),"",logged_user.getCustomer().getAccount(),order_to_addproduct,d);
+                        DelayPayment pay = new DelayPayment(logged_user.getLogin_id(), d, order_to_addproduct.getTotal(), "", logged_user.getCustomer().getAccount(), order_to_addproduct, d);
                         allObj.put(pay.hashCode(), pay);
-                        //System.out.println(line_to_add.hashCode());
-                    /*if (Create_new_order(logged_user.getCustomer().getAddress().getAddressString(), logged_user.getCustomer().getAccount(), orders)) {
-                        System.out.println("product added to order!");
-                    }*/
                     } else {
                         System.out.println("can't make that action..");
                     }
@@ -492,9 +478,9 @@ public class Main {
                     System.out.println("product been deleted");
                     break;
 
-                case "11":
-                    Show_all_object(users, orders, products, suppliers);//todo: need to send all the rest of the obejcts
-                    //Show all objects
+                case "11": //Show all objects
+                    Show_all_object(users, orders, products, suppliers);
+                    //todo: need to send all the rest of the obejcts
                     break;
 
                 case "12"://ShowObjectId *id*
@@ -539,18 +525,11 @@ public class Main {
     }
 
     public boolean Add_user(String login_id, LinkedList<User> users) {
-
         User u = find_user(login_id, users);
         if (u != null)
             return false;
-
         users.add(u);
         return true;
-
-        //TODO: ADD USER, GET DATA FROM USER
-            /*User new_u = new User()
-            users.add(new User())*/
-
     }
 
     public boolean Add_product_to_order(String order_id, String login_id, String product_name, LinkedList<Order> orders, LinkedList<Product> products) {
@@ -560,9 +539,6 @@ public class Main {
         Product p = find_Product(product_name, products);
         if (p == null)
             return false;
-        //todo: fill the function
-        //o.addLineItem();
-
         return true;
     }
 
