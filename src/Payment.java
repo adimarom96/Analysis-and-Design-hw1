@@ -16,10 +16,20 @@ public class Payment {
         this.account = account;
         this.order = order;
         account.addPayment(this);
+        order.addPayment(this);
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     public float getTotal() {
@@ -38,16 +48,8 @@ public class Payment {
         return order;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public void setTotal(float total) {
         this.total = total;
-    }
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
     public void setDetails(String details) {
@@ -55,15 +57,17 @@ public class Payment {
     }
 
     public void toPrint() {
-        System.out.println("Payment{" +
+        System.out.print("Payment{" +
                 "id='" + id + '\'' +
                 ", paid=" + paid +
                 ", total=" + total +
-                ", details='" + details+
+                ", details='" + details +
                 ", system id=" + hashCode());
         if (this instanceof ImmediatePayment)
             System.out.println(", PhoneConfirmation=" + ((ImmediatePayment) this).isPhoneConfirmation() + "}");
-        if (this instanceof DelayPayment)
+        else if (this instanceof DelayPayment)
             System.out.println(", PaymentDate=" + ((DelayPayment) this).getPaymentDate() + "}");
+        else
+            System.out.println();
     }
 }

@@ -128,6 +128,10 @@ public class Order {
                 '}' + ", Account: " + this.account.getID() + ", Payments: " + paymnetlist + ", LineItems: " + all ;
     }
 
+    public float getTotal() {
+        return total;
+    }
+
     public void toPrint() {
         System.out.println("Order{" +
                 "number='" + number + '\'' +

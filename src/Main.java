@@ -228,7 +228,7 @@ public class Main {
                     } else if (ans.equals("n")) {
                         account = new Account(login_id, billing_address, false, new Date(current_date), new Date("none"), 0, null, null);
                     } else
-                        break;// todo: what if !=y/n ???
+                        break;// todo: what if != y/n ???
                     customer = new Customer(login_id, phone, email, new Address(address), account, null);
                     user = new User(login_id, password, UserState.New, customer);
                     shoppingCart = new ShoppingCart(new Date(current_date), user, account);
@@ -322,7 +322,6 @@ public class Main {
                     //Create new order
                     Order new_order = Create_new_order(address, to_order, orders);
                     allObj.put(new_order.hashCode(), new_order);
-
                     break;
 
                 case "6": //Add product to order
@@ -330,43 +329,79 @@ public class Main {
                         System.out.println("you are not logged in!");
                         break;
                     }
-                    System.out.println("enter your login id:");
-                    //todo - the id is the id of the user the product belongs to !
-                    scan = new Scanner(System.in);
-                    login_id = scan.next();
-                    if (!logged_user.getLogin_id().equals(login_id)) {
-                        System.out.println("wrong login id");
-                        break;
-                    }
 
-                    System.out.println("enter the Order id ");
-                    scan = new Scanner(System.in);
-                    String order_id = scan.next();
-                    Order order_to_addproduct = find_order(order_id, orders);
-
-                    if (order_to_addproduct == null) {
-                        System.out.println("could not found " + order_id);
-                        break;
-                    }
-                    System.out.println("enter the product name ");
+                    System.out.println("enter the product name you want to buy");
                     scan = new Scanner(System.in);
                     product_name = scan.next();
-
                     product_to_order = find_Product(product_name, products);
                     if (product_to_order == null) {
                         System.out.println("could not found " + product_name);
                         break;
-                    } //todo: maybe need to conect payment to the new order
+                    }
 
-                    LineItem line_to_add = new LineItem(1, 1, product_to_order, logged_user.getShoppingCart(), order_to_addproduct);
-                    order_to_addproduct.addLineItem(line_to_add);
-                    System.out.println("product added to order!");
-                    allObj.put(line_to_add.hashCode(), line_to_add);
+                    System.out.println("enter login id to buy from");
+                    //todo - the id is the id of the user the product belongs to !
+                    scan = new Scanner(System.in);
+                    login_id = scan.next();
+//                    if (!logged_user.getLogin_id().equals(login_id)) {
+//                        System.out.println("wrong login id");
+//                        break;
+//                    }
+                    //todo: new ohad..
+                    String idToBuyFrom = "";
+                    boolean f1 = false;
+                    User u = find_user(login_id, users);
+                    LinkedList<Product> prods = null;
+                    if (u != null) {
+                        if (u.getCustomer().getAccount().isPremium()) {
+                            prods = ((PremiumAccount) (u.getCustomer().getAccount())).getProducts();
+                            for (Product p : prods
+                            ) {
+                                if (p == product_to_order) {
+                                    f1 = true;
+                                    break;
+                                }
+                            }
+                            if (!f1) {
+                                System.out.println("This product does not belong to this account");
+                                break;
+                            }
+                            idToBuyFrom = product_to_order.getPremiumAccount().getID();
+                        }
+                    }
+                    if (f1) {
+                        if (!idToBuyFrom.equals(product_to_order.getPremiumAccount().getID())) {
+                            System.out.println("wrong id");
+                            break;
+                        }
 
 
+                        System.out.println("enter the Order id");
+                        scan = new Scanner(System.in);
+                        String order_id = scan.next();
+                        Order order_to_addproduct = find_order(order_id, orders);
+
+                        if (order_to_addproduct == null) {
+                            System.out.println("could not found " + order_id);
+                            break;
+                        }
+
+                        LineItem line_to_add = new LineItem(1, 1, product_to_order, logged_user.getShoppingCart(), order_to_addproduct);
+                        order_to_addproduct.addLineItem(line_to_add);
+                        System.out.println("product added to order!");
+                        allObj.put(line_to_add.hashCode(), line_to_add);
+                        localDate = LocalDate.now();
+                        current_date = localDate.toString();
+                        Date d = new Date(current_date);
+                        DelayPayment pay = new DelayPayment(logged_user.getLogin_id(),d,order_to_addproduct.getTotal(),"",logged_user.getCustomer().getAccount(),order_to_addproduct,d);
+                        allObj.put(pay.hashCode(), pay);
+                        //System.out.println(line_to_add.hashCode());
                     /*if (Create_new_order(logged_user.getCustomer().getAddress().getAddressString(), logged_user.getCustomer().getAccount(), orders)) {
                         System.out.println("product added to order!");
                     }*/
+                    } else {
+                        System.out.println("can't make that action..");
+                    }
                     break;
 
                 case "7"://Display order
@@ -428,6 +463,7 @@ public class Main {
                     allObj.put(product_to_order.hashCode(), product_to_order);
                     supplier.addProduct(product_to_order);
                     products.add(product_to_order);
+                    System.out.println("new product added");
                     break;
 
                 case "10":
@@ -453,6 +489,7 @@ public class Main {
                     }
                     products.remove(product_to_order);
                     allObj.remove(product_to_order.hashCode());
+                    System.out.println("product been deleted");
                     break;
 
                 case "11":

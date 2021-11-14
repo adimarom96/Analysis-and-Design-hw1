@@ -65,7 +65,6 @@ public class LineItem {
     public void delete_lineitem_from_product() {
         this.product.removeLineItem(this);
     }
-
     public void delete_lineitem_from_shopcart() {
         this.shoppingCart.removeLineItem(this);
     }
@@ -85,7 +84,7 @@ public class LineItem {
 
     @Override
     public String toString() {
-        return ", Product: " + this.product.getName() + "LineItem{" +
+        return ", Product: " + this.product.getName() + " LineItem{" +
                 "quantity=" + quantity +
                 ", price=" + price +
                 '}' + ", ShoppingCart: " + this.shoppingCart.getDate() + ", Order: "
