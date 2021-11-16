@@ -237,7 +237,7 @@ public class Main {
                     } else if (ans.equals("n")) {
                         account = new Account(login_id, billing_address, false, new Date(current_date), new Date("none"), 0, null, null);
                     } else
-                        break;// todo: what if != y/n ???
+                        break;
                     customer = new Customer(login_id, phone, email, new Address(address), account, null);
                     user = new User(login_id, password, UserState.New, customer);
                     shoppingCart = new ShoppingCart(new Date(current_date), user, account);
@@ -265,10 +265,7 @@ public class Main {
 
                     if (user2 != null) {
                         System.out.println(login_id + " been removed");
-
                         allObj.remove(user2.hashCode());
-                        //todo: remove from hash: shoopingcart, account ..etc
-
                         if (logged_user.getLogin_id().equals(login_id))
                             logged_user = null;
                     } else
@@ -512,7 +509,6 @@ public class Main {
 
                 case "11": //Show all objects
                     Show_all_object(users, orders, products, suppliers);
-                    //todo: need to send all the rest of the obejcts
                     break;
 
                 case "12"://ShowObjectId *id*

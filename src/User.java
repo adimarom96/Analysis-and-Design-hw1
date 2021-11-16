@@ -64,11 +64,6 @@ public class User {
         this.shoppingCart = shoppingCart;
     }
 
-    public void remove_user() {
-        // todo: remove shopping cart and more
-        // todo: important!
-    }
-
     public void print() {
         // print User , Customer , Account, ShopCart
         System.out.println(this);
