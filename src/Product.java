@@ -6,12 +6,14 @@ public class Product {
     private Supplier supplier;
     private LinkedList<LineItem> lineItems;
     private PremiumAccount premiumAccount;
+    private int price;
 
     public Product(String id, String name, Supplier supplier) {
         this.id = id;
         this.name = name;
         this.supplier = supplier;
         this.lineItems = new LinkedList<LineItem>();
+        this.price=0;
     }
 
     public Product(String id, String name, Supplier supplier, PremiumAccount premiumAccount) {
@@ -20,6 +22,15 @@ public class Product {
         this.supplier = supplier;
         this.lineItems = new LinkedList<LineItem>();
         this.premiumAccount = premiumAccount;
+        this.price=0;
+    }
+
+    public void setPrice(int price){
+        this.price=price;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     public String getId() {
@@ -111,6 +122,7 @@ public class Product {
         System.out.println("Product{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", price =" + price +
                 ", system id=" + hashCode() +
 
                 '}');

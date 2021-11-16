@@ -115,4 +115,8 @@ public class Account {
     public String getID() {
         return id;
     }
+
+    public LinkedList<Payment> getPayments() {
+        return payments;
+    }
 }

@@ -40,13 +40,22 @@ public class Main {
         return null;
     }
 
-    static User Remove_user(String login_id, LinkedList<User> users, HashMap<Integer, Object> allobj) {
+    static User Remove_user(String login_id, LinkedList<User> users, HashMap<Integer, Object> allobj,LinkedList<Order> allOrders) {
         User u = find_user(login_id, users);
         if (u != null) {
             users.remove(u);
             Account accountremove = u.getCustomer().getAccount();
             Customer customerremove = u.getCustomer();
             ShoppingCart shoptoremove = u.getShoppingCart();
+            for (Payment p: accountremove.getPayments()
+                 ) {
+                allobj.remove(p.hashCode());
+            }
+            for (Order o: accountremove.getOrders()
+            ) {
+                allobj.remove(o.hashCode());
+                allOrders.remove(o);
+            }
 
             for (LineItem l : shoptoremove.getLines() // remove the lines of the shopping cart from the hash
             ) {
@@ -178,12 +187,12 @@ public class Main {
         dana.setShoppingCart(SCDana);
         accDana.setShoppingCart(SCDana);
         users.add(dana);
-        accDana.addProcudt(bamba);
+        accDana.addProcudt(bamba, 1);
 
 
         //dana.toString();
         //dani.toString();
-        logged_user = dani;
+        logged_user = null;
         System.out.println("Welcome");
         boolean flag = true;
         while (flag) {
@@ -249,13 +258,14 @@ public class Main {
                         System.out.println("you must logged in first");
                         break;
                     }
-                    // todo: can remove others?
                     System.out.println("enter login id you want to remove");
                     scan = new Scanner(System.in);
                     login_id = scan.next();
-                    User user2 = Remove_user(login_id, users, allObj);
+                    User user2 = Remove_user(login_id, users, allObj,orders);
+
                     if (user2 != null) {
                         System.out.println(login_id + " been removed");
+
                         allObj.remove(user2.hashCode());
                         //todo: remove from hash: shoopingcart, account ..etc
 
@@ -329,25 +339,35 @@ public class Main {
                         System.out.println("you are not logged in!");
                         break;
                     }
-
-                    System.out.println("enter the product name you want to buy");
+                    System.out.println("enter the Order id");
                     scan = new Scanner(System.in);
-                    product_name = scan.next();
-                    product_to_order = find_Product(product_name, products);
-                    if (product_to_order == null) {
-                        System.out.println("could not found " + product_name);
+                    String order_id = scan.next();
+                    Order order_to_addproduct = find_order(order_id, orders);
+                    if (order_to_addproduct == null) {
+                        System.out.println("could not found " + order_id);
                         break;
                     }
 
                     System.out.println("enter login id to buy from");
                     scan = new Scanner(System.in);
                     login_id = scan.next();
+
+                    System.out.println("enter the product name you want to buy");
+                    scan = new Scanner(System.in);
+                    product_name = scan.next();
+                    product_to_order = find_Product(product_name, products);
+                    if (product_to_order == null) {
+                        System.out.println("one or more of your inputs are wrong");
+                        break;
+                    }
+
                     String idToBuyFrom = "";
                     boolean f1 = false;
                     User u = find_user(login_id, users);
                     LinkedList<Product> prods = null;
                     if (u != null) {
                         if (u.getCustomer().getAccount().isPremium()) {
+
                             prods = ((PremiumAccount) (u.getCustomer().getAccount())).getProducts();
                             for (Product p : prods
                             ) {
@@ -364,19 +384,17 @@ public class Main {
                         }
                     }
                     if (f1) {
-                        if (!idToBuyFrom.equals(product_to_order.getPremiumAccount().getID())) {
-                            System.out.println("wrong id");
+//                        if (!idToBuyFrom.equals(product_to_order.getPremiumAccount().getID())) {
+//                            System.out.println("wrong id");
+//                            break;
+//
+                        PremiumAccount premium = (PremiumAccount) u.getCustomer().getAccount();
+                        if (!premium.hasenogh(product_name, 1)) {
+                            System.out.println("product out of stock");
                             break;
                         }
-                        System.out.println("enter the Order id");
-                        scan = new Scanner(System.in);
-                        String order_id = scan.next();
-                        Order order_to_addproduct = find_order(order_id, orders);
-                        if (order_to_addproduct == null) {
-                            System.out.println("could not found " + order_id);
-                            break;
-                        }
-                        LineItem line_to_add = new LineItem(1, 1, product_to_order, logged_user.getShoppingCart(), order_to_addproduct);
+                        premium.decressProd(product_name);
+                        LineItem line_to_add = new LineItem(1, product_to_order.getPrice(), product_to_order, logged_user.getShoppingCart(), order_to_addproduct);
                         order_to_addproduct.addLineItem(line_to_add);
                         System.out.println("product added to order!");
                         allObj.put(line_to_add.hashCode(), line_to_add);
@@ -386,7 +404,7 @@ public class Main {
                         DelayPayment pay = new DelayPayment(logged_user.getLogin_id(), d, order_to_addproduct.getTotal(), "", logged_user.getCustomer().getAccount(), order_to_addproduct, d);
                         allObj.put(pay.hashCode(), pay);
                     } else {
-                        System.out.println("can't make that action..");
+                        System.out.println("one or more of your inputs are wrong");
                     }
                     break;
 
@@ -413,7 +431,7 @@ public class Main {
                         System.out.println("your are not premium account!");
                         break;
                     }
-                    System.out.println("enter the product name ");
+                    System.out.println("enter the product name");
                     scan = new Scanner(System.in);
                     product_name = scan.next();
                     productLink = find_Product(product_name, products);
@@ -421,11 +439,25 @@ public class Main {
                         System.out.println("could not found " + product_name);
                         break;
                     }
-                    if (productLink.getPremiumAccount() == null) {
-                        ((PremiumAccount) logged_user.getCustomer().getAccount()).addProcudt(productLink);
+                    System.out.println("enter the price");
+                    scan = new Scanner(System.in);
+                    int price = scan.nextInt();
+
+                    System.out.println("enter the quantity");
+                    scan = new Scanner(System.in);
+                    int quantity = scan.nextInt();
+                    if(productLink.getPremiumAccount()==null){
+                        System.out.println("This product already linked to other premium account!");
+                        break;
+                    }
+                    if (Link_product(productLink, price, quantity, logged_user, products))
                         System.out.println("Successfully link the product!");
-                    } else
-                        System.out.println("This product already belong to another premium account");
+                    else {
+                        System.out.println("could not link the product");
+                        break;
+                    }
+
+
                     break;
 
                 case "9": //Add Product *Product_Name* *Supplier_Name*
@@ -515,6 +547,20 @@ public class Main {
         }
     }
 
+    public static boolean Link_product(Product product, int price, int quantity, User logged_user, LinkedList<Product> all_products) {
+
+        Account premium_account = logged_user.getCustomer().getAccount();
+        LinkedList<Product> account_products = ((PremiumAccount) premium_account).getProducts();
+
+        if (find_Product(product.getName(), account_products) == null) {
+            product.setPrice(price);
+            ((PremiumAccount) premium_account).addProcudt(product, quantity);
+            return true;
+        }
+
+        return false;
+    }
+
     public Supplier find_Supp(String supp_name, LinkedList<Supplier> suppliers) {
         for (Supplier s : suppliers
         ) {
@@ -546,22 +592,6 @@ public class Main {
         LinkedList<Order> user_orders = logged_user.getCustomer().getAccount().getOrders();
         Order order = user_orders.getLast();
         order.toPrint();
-    }
-
-    public boolean Link_product(String product_name, double price, int quantity, User logged_user, LinkedList<Product> all_products) {
-        if (logged_user == null)
-            return false;
-        Product product_to_add = find_Product(product_name, all_products);
-        Account a = logged_user.getCustomer().getAccount();
-        if (a instanceof PremiumAccount) {
-            LinkedList<Product> account_products;
-            account_products = ((PremiumAccount) a).getProducts();
-            if (find_Product(product_name, account_products) == null) {
-                account_products.add(product_to_add);
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean Add_product(String product_name, String supp_name, LinkedList<Product> all_products, LinkedList<Supplier> all_suppplier) {
