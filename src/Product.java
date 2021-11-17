@@ -13,20 +13,11 @@ public class Product {
         this.name = name;
         this.supplier = supplier;
         this.lineItems = new LinkedList<LineItem>();
-        this.price=0;
+        this.price = 0;
     }
 
-    public Product(String id, String name, Supplier supplier, PremiumAccount premiumAccount) {
-        this.id = id;
-        this.name = name;
-        this.supplier = supplier;
-        this.lineItems = new LinkedList<LineItem>();
-        this.premiumAccount = premiumAccount;
-        this.price=0;
-    }
-
-    public void setPrice(int price){
-        this.price=price;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public int getPrice() {
@@ -45,16 +36,8 @@ public class Product {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Supplier getSupplier() {
         return supplier;
-    }
-
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
     }
 
     public boolean addLineItem(LineItem lineItem) {
@@ -71,26 +54,8 @@ public class Product {
         return true;
     }
 
-    public boolean addPremiumAccount(PremiumAccount p) {
-        if (this.premiumAccount == null) {
-            this.premiumAccount = p;
-            return true;
-        }
-        return false;
-    }
-
-    public boolean addSupplier(Supplier supplier) {
-        if (this.supplier == null) {
-            if (supplier.addProduct(this)) {
-                this.supplier = supplier;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean removeLineItem(LineItem lineItem) {
-        return this.lineItems.remove(lineItem);
+    public void removeLineItem(LineItem lineItem) {
+        this.lineItems.remove(lineItem);
     }
 
     public void remove() {
@@ -124,7 +89,6 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", price =" + price +
                 ", system id=" + hashCode() +
-
                 '}');
     }
 
@@ -136,7 +100,6 @@ public class Product {
         for (LineItem l : lineItems
         ) {
             all += ", lineitem: " + l.getProduct().getName() + " - Price: " + l.getPrice() + " Quantity: " + l.getQuantity();
-
         }
         return "Product{" +
                 "id='" + id + '\'' +

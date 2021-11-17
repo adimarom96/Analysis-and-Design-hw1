@@ -37,10 +37,8 @@ public class PremiumAccount extends Account {
         return products;
     }
 
-    boolean hasenogh(String proudct, int qunt) {
-        if (prod_quntity.get(proudct) < qunt)
-            return false;
-        return true;
+    boolean has_enough(String proudct, int qunt) {
+        return prod_quntity.get(proudct) >= qunt;
     }
 
     public void decressProd(String product_name) {

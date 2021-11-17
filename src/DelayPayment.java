@@ -5,10 +5,12 @@ public class DelayPayment extends Payment {
         super(id, paid, total, details, account, order);
         this.paymentDate = paymentDate;
     }
+
     @Override
     public int hashCode() {
         return super.hashCode();
     }
+
     public Date getPaymentDate() {
         return paymentDate;
     }

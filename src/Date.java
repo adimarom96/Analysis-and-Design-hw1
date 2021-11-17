@@ -18,7 +18,6 @@ public class Date {
         return date;
     }
 }
-
 enum UserState {
     New,
     Active,

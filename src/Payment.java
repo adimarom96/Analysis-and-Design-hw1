@@ -32,30 +32,6 @@ public class Payment {
         return super.hashCode();
     }
 
-    public float getTotal() {
-        return total;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setTotal(float total) {
-        this.total = total;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
     public void toPrint() {
         System.out.print("Payment{" +
                 "id='" + id + '\'' +

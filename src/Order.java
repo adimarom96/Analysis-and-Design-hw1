@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.LinkedList;
 
 public class Order {
@@ -27,20 +26,6 @@ public class Order {
         account.addOrder(this);
     }
 
-    public Order(Date orderd, Address ship_to, OrderStatus status, LinkedList<LineItem> lineItems, Account account, LinkedList<Payment> payments) {
-        orderid++;
-        this.number = String.valueOf(orderid);
-        this.shipped = null;
-        this.ordered = orderd;
-        this.ship_to = ship_to;
-        this.total = 0;
-        this.status = status;
-        this.lineItems = lineItems;
-        this.account = account;
-        this.payments = payments;
-        account.addOrder(this);
-    }
-
     public boolean addLineItem(LineItem lineItem) {
         if (lineItem == null) {
             return false;
@@ -56,28 +41,22 @@ public class Order {
         return true;
     }
 
-    public boolean removeLineItem(LineItem lineItem) {
+    public void removeLineItem(LineItem lineItem) {
         this.total -= lineItem.getPrice();
-        return this.lineItems.remove(lineItem);
+        this.lineItems.remove(lineItem);
     }
 
-    public boolean addPayment(Payment payment) {
+    public void addPayment(Payment payment) {
         if (payment == null) {
-            return false;
+            return;
         }
         for (Payment p : this.payments
         ) {
             if (p == payment) {
-                return false;
+                return;
             }
         }
         this.payments.add(payment);
-        return true;
-
-    }
-
-    public boolean removePayment(Payment payment) {
-        return this.payments.remove(payment);
     }
 
     public String getNumber() {
@@ -88,54 +67,77 @@ public class Order {
         return this.number;
     }
 
-    public void display()  {
-        System.out.println("Order number: " + this.number);
-        System.out.println("Order date: " + this.ordered);
-        if(this.shipped!=null)
-            System.out.println("Shipping date: " + this.shipped);
-        else
-            System.out.println("Not shipped yet");
-        System.out.println("Ship to: " + this.ship_to);
-        System.out.println("Status: " + this.status);
-        System.out.println("Total: " + this.total);
-        System.out.println();
-    }
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        String paymnetlist="";
-        for (Payment pay:payments
+    private int getProductsNum() {
+        int s = 0;
+        for (LineItem l : lineItems
         ) {
-            paymnetlist += pay.getId() + " ";
+            s++;
         }
-        String all="";
-        for (LineItem l :lineItems
-        ) {
-            all += ", lineitem: " + l.getProduct().getName() + " - Price: " + l.getPrice()+ " Quantity: " + l.getQuantity();
-
-        }
-        return "Order{" +
-                "number='" + number + '\'' +
-                ", shipped=" + shipped +
-                ", ordered=" + ordered +
-                ", ship_to=" + ship_to +
-                ", total=" + total +
-                ", status=" + status +
-                '}' + ", Account: " + this.account.getID() + ", Payments: " + paymnetlist + ", LineItems: " + all ;
+        return s;
     }
 
     public float getTotal() {
         return total;
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    public void display() {
+        int s = 0;
+        System.out.println("Order number: " + this.number);
+        System.out.println("Order date: " + this.ordered);
+        if (this.shipped != null)
+            System.out.println("Shipping date: " + this.shipped);
+        else
+            System.out.println("Not shipped yet");
+        System.out.println("Ship to: " + this.ship_to);
+        System.out.println("Status: " + this.status);
+        s = this.getProductsNum();
+        if (s != 0)
+            System.out.println("Number of Products: " + s);
+        System.out.println("Total money: " + this.total);
+    }
+
+    @Override
+    public String toString() {
+        String payList = "";
+        for (Payment pay : payments
+        ) {
+            payList += pay.getId() + " ";
+        }
+        String all = "";
+        for (LineItem l : lineItems
+        ) {
+            all += "line item: " + l.getProduct().getName() + " - Price: " + l.getPrice() + " Quantity: " + l.getQuantity()+", ";
+
+        }
+        String ans="";
+        if(this.shipped != null)
+            ans = shipped.toString();
+        else
+            ans = "not yet";
+        return "Order{" +
+                "number='" + number + '\'' +
+                ", shipped=" + ans +
+                ", ordered=" + ordered +
+                ", ship_to=" + ship_to +
+                ", total=" + total +
+                ", status=" + status +
+                '}' + ", Account: " + this.account.getID() + ", Payments: " + payList + ", LineItems: " + all;
+    }
+
     public void toPrint() {
+        String ans="";
+        if(this.shipped != null)
+            ans = shipped.toString();
+        else
+            ans = "not yet";
         System.out.println("Order{" +
                 "number='" + number + '\'' +
-                ", shipped=" + shipped +
+                ", shipped=" + ans +
                 ", ordered=" + ordered +
                 ", ship_to=" + ship_to +
                 ", total=" + total +

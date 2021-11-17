@@ -10,38 +10,12 @@ public class User {
         this.password = password;
         this.state = state;
         this.customer = customer;
-        //if (customer.getUser() == null)
-        //    customer.setUser(this);
     }
 
-    public User(String login_id, String password, UserState state, Customer customer, ShoppingCart shoppingCart) {
-        this.login_id = login_id;
-        this.password = password;
-        this.state = state;
-        this.customer = customer;
-        this.shoppingCart = shoppingCart;
-        if (customer.getUser() == null)
-            customer.setUser(this);
-    }
-
-    /*public boolean addShoppingCart(ShoppingCart shopC) {
-        if (this.shoppingCart == null) {
-            if (shopC.addUser(this)) {
-                this.shoppingCart = shopC;
-                return true;
-            }
-        }
-        return false;
-    }*/
-
-    public boolean addCustomer(Customer customer) {
+    public void addCustomer(Customer customer) {
         if (this.customer == null) {
-            //if (customer.getUser() == null) { // when adding customer make sure that the customer dont alredy have user
             this.customer = customer;
-            return true;
-
         }
-        return false;
     }
 
     public String getLogin_id() {
@@ -62,12 +36,6 @@ public class User {
 
     public void setShoppingCart(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
-    }
-
-    public void print() {
-        // print User , Customer , Account, ShopCart
-        System.out.println(this);
-
     }
 
     @Override
@@ -93,6 +61,6 @@ public class User {
                 "login_id='" + login_id + '\'' +
                 ", password='" + password + '\'' +
                 ", state=" + state +
-                '}'+ " Customer: " + this.getCustomer().getId() + ", Shopping cart: " + shoppingCart.getDate();
+                '}' + " Customer: " + this.getCustomer().getId() + ", Shopping cart: " + shoppingCart.getDate();
     }
 }

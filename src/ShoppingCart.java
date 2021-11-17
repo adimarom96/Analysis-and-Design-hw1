@@ -22,13 +22,6 @@ public class ShoppingCart {
         this.lineItems = new LinkedList<LineItem>();
     }
 
-    public ShoppingCart(Date date, User user, LinkedList<LineItem> lineItems, Account account) {
-        this.created = date;
-        this.user = user;
-        this.lineItems = lineItems;
-        this.account = account;
-    }
-
     public boolean addLineItem(LineItem lineItem) { //maybe should get alinked list of line items
         if (lineItem != null) {
             this.lineItems.add(lineItem);
@@ -37,14 +30,10 @@ public class ShoppingCart {
         return false;
     }
 
-    public boolean removeLineItem(LineItem lineItem) {
+    public void removeLineItem(LineItem lineItem) {
         this.lineItems.remove(lineItem);
-        return true;
     }
 
-    /*public boolean addUser(User user) {
-        return true;
-    }*/
     @Override
     public int hashCode() {
         return super.hashCode();

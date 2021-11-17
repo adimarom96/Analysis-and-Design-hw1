@@ -108,7 +108,7 @@ public class Account {
                 ", open=" + open +
                 ", closed=" + closed +
                 ", balance=" + balance +
-                '}' + " Customer: " + this.customer.getId() + ", ShoppingCart:" + shoppingCart.getDate()  +
+                '}' + "Customer: " + this.customer.getId() + ", ShoppingCart:" + shoppingCart.getDate()  +
                 ", Orders: " + orderlist +", Payments: " + paymnetlist;
     }
 
